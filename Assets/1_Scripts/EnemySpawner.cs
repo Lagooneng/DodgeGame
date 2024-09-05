@@ -12,7 +12,7 @@ namespace Lagooneng.DodgeGame
         [SerializeField] private bool isHorizontal = true;
         [SerializeField] private float spawnMinDelay = 0.2f;
         [SerializeField] private float spawnMaxDelay = 2.0f;
-        private float spawnDelay = 0.1f;
+        private float spawnDelay = 3.0f;
         private int enemyLength;
 
         private void Awake()
@@ -28,6 +28,8 @@ namespace Lagooneng.DodgeGame
             Vector3 pos = Vector3.zero;
             while ( true )
             {
+                yield return new WaitForSeconds(spawnDelay);
+
                 idx = Random.Range(0, enemyLength);
                 
                 if (isHorizontal)
@@ -44,7 +46,6 @@ namespace Lagooneng.DodgeGame
                 Instantiate(enemyList[idx], pos, Quaternion.identity);
 
                 spawnDelay = Random.Range(spawnMinDelay, spawnMaxDelay);
-                yield return new WaitForSeconds(spawnDelay);
             }
         }
     }

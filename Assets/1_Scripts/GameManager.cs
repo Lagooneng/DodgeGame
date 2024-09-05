@@ -14,6 +14,7 @@ namespace Lagooneng.DodgeGame
         private void Awake()
         {
             Instance = this;
+            Time.timeScale = 0.0f;
         }
 
         public void GameEnd()
@@ -22,8 +23,14 @@ namespace Lagooneng.DodgeGame
             score.text = "Candy: " + ((int)PlayTime.Instance.LastPlayTime / 10 + 1).ToString();
         }
 
+        public void ActiveTime()
+        {
+            Time.timeScale = 1.0f;
+        }
+
         public void ReLoadScene()
         {
+            Time.timeScale = 0.0f;
             UnityEngine.SceneManagement.SceneManager.LoadScene(0);
         }
 
