@@ -8,6 +8,7 @@ namespace Lagooneng.DodgeGame
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance;
+        public bool GameEnded { get; set; }
         [SerializeField] private GameObject gameEnd;
         [SerializeField] private TMP_Text score;
 
@@ -15,10 +16,29 @@ namespace Lagooneng.DodgeGame
         {
             Instance = this;
             Time.timeScale = 0.0f;
+            GameEnded = false;
+        }
+
+        private void Update()
+        {
+            if( Input.GetKeyDown(KeyCode.Space) && Time.timeScale < 1.0f )
+            {
+                if( GameEnded )
+                {
+                    ReLoadScene();
+                }
+                else
+                {
+                    GameManager.Instance.ActiveTime();
+                    CountDown.Instance.GameEndCalled();
+                }
+                
+            }
         }
 
         public void GameEnd()
         {
+            GameEnded = true;
             gameEnd.SetActive(true);
             score.text = "Candy: " + ((int)PlayTime.Instance.LastPlayTime / 10 + 1).ToString();
         }

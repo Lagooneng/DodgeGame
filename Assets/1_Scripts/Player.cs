@@ -15,6 +15,8 @@ namespace Lagooneng.DodgeGame
         [SerializeField] float speed = 5.0f;
         [SerializeField] float jumpPower = 10.0f;
         [SerializeField] Transform groundDetection;
+        [SerializeField] CircleCollider2D body;
+        [SerializeField] CircleCollider2D trigger;
 
         private bool grounded = true;
         private bool doubleJumped = false;
@@ -31,7 +33,20 @@ namespace Lagooneng.DodgeGame
         {
             if (!isActivated) return;
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if( Input.GetKey( KeyCode.DownArrow ) )
+            {
+                transform.localScale = new Vector3(transform.localScale.x, 0.5f, transform.localScale.z);
+                body.radius = 0.2f;
+                trigger.radius = 0.2f;
+            }
+            else
+            {
+                transform.localScale = new Vector3(transform.localScale.x, 1.0f, transform.localScale.z);
+                body.radius = 0.38f;
+                trigger.radius = 0.3f;
+            }
+
+            if ( Input.GetKeyDown(KeyCode.Space) && CountDown.Instance.CountDownUsed )
             {
                 if (grounded)
                 {

@@ -7,15 +7,26 @@ namespace Lagooneng.DodgeGame
 {
     public class CountDown : MonoBehaviour
     {
+        public static CountDown Instance;
+
         [SerializeField] private GameObject StartGroup;
         [SerializeField] private GameObject StartBtn;
         [SerializeField] int count = 3;
         [SerializeField] private TMP_Text countText;
 
+        public bool CountDownUsed { get; set; }
+
+        private void Awake()
+        {
+            Instance = this;
+            CountDownUsed = false;
+        }
+
         public void GameEndCalled()
         {
             StartBtn.SetActive(false);
             countText.enabled = true;
+            CountDownUsed = true;
 
             StartCoroutine(Count());
         }
